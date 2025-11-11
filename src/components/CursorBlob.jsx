@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, useSpring } from 'framer-motion'
 
 // Floating 3D cursor-following blob accent
 // - Follows the cursor with a spring for smoothness
 // - Uses a soft rose radial gradient and subtle rotation for depth
 // - Respects reduced motion and disables on touch devices
-export default function CursorBlob({ enabled = true }) {
+export default function CursorBlob({ enabled = true, size = { base: 224, md: 256 }, maxOpacity = 0.35 }) {
   const [isTouch, setIsTouch] = useState(false)
   const [hovering, setHovering] = useState(true)
 
@@ -34,27 +34,43 @@ export default function CursorBlob({ enabled = true }) {
     }
   }, [x, y])
 
+  const dimensions = useMemo(() => {
+    const base = size?.base ?? 224
+    const md = size?.md ?? 256
+    return { base, md }
+  }, [size])
+
   if (!enabled || isTouch) return null
 
   return (
     <motion.div
       aria-hidden
-      className="fixed pointer-events-none z-[5] mix-blend-multiply" // behind navbar (z-50) and content overlays
+      className="fixed pointer-events-none z-[5] mix-blend-multiply"
       style={{ left: 0, top: 0, x, y, translateX: '-50%', translateY: '-50%' }}
       initial={{ opacity: 0 }}
-      animate={{ opacity: hovering ? 0.35 : 0 }}
+      animate={{ opacity: hovering ? maxOpacity : 0 }}
       transition={{ duration: 0.4 }}
     >
       <motion.div
-        className="w-56 h-56 md:w-64 md:h-64 rounded-full blur-2xl"
+        className="rounded-full blur-2xl"
         style={{
-          background:
-            'radial-gradient(60% 60% at 50% 50%, rgba(244,63,94,0.6) 0%, rgba(244,63,94,0.25) 30%, rgba(244,63,94,0.12) 55%, transparent 70%)',
-          boxShadow: '0 60px 120px -40px rgba(244,63,94,0.35)',
+          width: dimensions.base,
+          height: dimensions.base,
         }}
-        animate={{ rotate: [0, 3, -3, 0], scale: [1, 1.02, 0.99, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      >
+        <motion.div
+          className="rounded-full w-full h-full md:w-[unset] md:h-[unset]"
+          style={{
+            width: dimensions.base,
+            height: dimensions.base,
+            background:
+              'radial-gradient(60% 60% at 50% 50%, rgba(244,63,94,0.6) 0%, rgba(244,63,94,0.25) 30%, rgba(244,63,94,0.12) 55%, transparent 70%)',
+            boxShadow: '0 60px 120px -40px rgba(244,63,94,0.35)',
+          }}
+          animate={{ rotate: [0, 3, -3, 0], scale: [1, 1.02, 0.99, 1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </motion.div>
     </motion.div>
   )
 }
