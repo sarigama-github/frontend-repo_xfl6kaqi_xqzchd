@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Tilt from './Tilt'
 
 const courses = [
   'Machine Learning',
@@ -23,8 +24,8 @@ const tile = {
 
 export default function Coursework() {
   return (
-    <section id="coursework" className="py-16 md:py-20 bg-gray-50 relative overflow-hidden">
-      <div className="pointer-events-none absolute -bottom-20 left-8 h-56 w-56 rounded-full bg-indigo-100 blur-3xl opacity-60" />
+    <section id="coursework" className="py-16 md:py-20 bg-rose-50/40 relative overflow-hidden">
+      <div className="pointer-events-none absolute -bottom-20 left-8 h-56 w-56 rounded-full bg-rose-100 blur-3xl opacity-60" />
       <div className="max-w-6xl mx-auto px-4 relative">
         <motion.h2
           initial={{ opacity: 0, y: 8 }}
@@ -44,9 +45,15 @@ export default function Coursework() {
           className="mt-6 grid sm:grid-cols-2 md:grid-cols-4 gap-3"
         >
           {courses.map((c) => (
-            <motion.div key={c} variants={tile} whileHover={{ y: -4 }} className="rounded-xl border border-gray-200 bg-white p-4 text-sm text-gray-700 shadow-sm/0 hover:shadow-sm">
-              {c}
-            </motion.div>
+            <Tilt key={c} intensity={8} className="relative">
+              <motion.div
+                variants={tile}
+                whileHover={{ y: -4 }}
+                className="rounded-xl border border-rose-100 bg-white p-4 text-sm text-gray-700 shadow-sm/0 hover:shadow-sm"
+              >
+                {c}
+              </motion.div>
+            </Tilt>
           ))}
         </motion.div>
       </div>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Tilt from './Tilt'
 
 const experience = [
   {
@@ -36,7 +37,7 @@ const row = {
 export default function Experience() {
   return (
     <section id="experience" className="py-16 md:py-20 bg-white relative overflow-hidden">
-      <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 h-64 w-[40rem] bg-indigo-100 blur-3xl opacity-60 rounded-full" />
+      <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 h-64 w-[40rem] bg-rose-100 blur-3xl opacity-60 rounded-full" />
       <div className="max-w-6xl mx-auto px-4 relative">
         <motion.h2
           initial={{ opacity: 0, y: 8 }}
@@ -56,20 +57,22 @@ export default function Experience() {
           className="mt-6 space-y-4"
         >
           {experience.map((e) => (
-            <motion.div key={e.role} variants={row} className="rounded-xl border border-gray-200 p-5 bg-white/80 backdrop-blur-sm">
-              <div className="flex items-center justify-between gap-3 flex-wrap">
-                <div>
-                  <h3 className="font-semibold text-gray-900">{e.role}</h3>
-                  <p className="text-sm text-gray-600">{e.org}</p>
+            <Tilt key={e.role} intensity={8} className="block">
+              <motion.div variants={row} className="rounded-xl border border-rose-100 p-5 bg-white/80 backdrop-blur-sm">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{e.role}</h3>
+                    <p className="text-sm text-gray-600">{e.org}</p>
+                  </div>
+                  <p className="text-sm text-gray-500">{e.time}</p>
                 </div>
-                <p className="text-sm text-gray-500">{e.time}</p>
-              </div>
-              <ul className="mt-3 list-disc pl-5 text-sm text-gray-700 space-y-1">
-                {e.bullets.map((b, idx) => (
-                  <li key={idx}>{b}</li>
-                ))}
-              </ul>
-            </motion.div>
+                <ul className="mt-3 list-disc pl-5 text-sm text-gray-700 space-y-1">
+                  {e.bullets.map((b, idx) => (
+                    <li key={idx}>{b}</li>
+                  ))}
+                </ul>
+              </motion.div>
+            </Tilt>
           ))}
         </motion.div>
       </div>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Tilt from './Tilt'
 
 const projects = [
   {
@@ -41,7 +42,7 @@ const card = {
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-16 md:py-20 bg-gray-50">
+    <section id="projects" className="py-16 md:py-20 bg-rose-50/40">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-end justify-between gap-4">
           <motion.h2
@@ -53,7 +54,7 @@ export default function Projects() {
           >
             Projects
           </motion.h2>
-          <a href="https://github.com/" target="_blank" rel="noreferrer" className="text-sm text-gray-600 hover:text-gray-900">See all →</a>
+          <a href="https://github.com/" target="_blank" rel="noreferrer" className="text-sm text-rose-700 hover:text-rose-800">See all →</a>
         </div>
         <motion.div
           variants={container}
@@ -62,25 +63,26 @@ export default function Projects() {
           viewport={{ once: true, margin: '-100px' }}
           className="mt-6 grid md:grid-cols-3 gap-4"
         >
-          {projects.map((p, idx) => (
-            <motion.div
-              key={p.title}
-              variants={card}
-              whileHover={{ y: -6 }}
-              className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm/0 hover:shadow-sm transition relative overflow-hidden"
-            >
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-50/0 via-transparent to-fuchsia-50/40 opacity-0 group-hover:opacity-100 transition" />
-              <span className="text-xs font-medium text-indigo-700 bg-indigo-50 px-2 py-1 rounded">{p.tag}</span>
-              <h3 className="mt-3 font-semibold text-gray-900">{p.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{p.desc}</p>
-              <div className="mt-4 flex gap-3">
-                {p.links.map((l) => (
-                  <a key={l.label} href={l.href} target="_blank" rel="noreferrer" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                    {l.label} →
-                  </a>
-                ))}
-              </div>
-            </motion.div>
+          {projects.map((p) => (
+            <Tilt key={p.title} glare className="group relative" intensity={10}>
+              <motion.div
+                variants={card}
+                whileHover={{ y: -6 }}
+                className="rounded-xl border border-rose-100 bg-white p-5 shadow-sm/0 hover:shadow-sm transition relative overflow-hidden"
+              >
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-rose-50/0 via-transparent to-rose-100/40 opacity-0 group-hover:opacity-100 transition" />
+                <span className="text-xs font-medium text-rose-700 bg-rose-50 px-2 py-1 rounded">{p.tag}</span>
+                <h3 className="mt-3 font-semibold text-gray-900">{p.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{p.desc}</p>
+                <div className="mt-4 flex gap-3">
+                  {p.links.map((l) => (
+                    <a key={l.label} href={l.href} target="_blank" rel="noreferrer" className="text-sm font-medium text-rose-700 hover:text-rose-800">
+                      {l.label} →
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
+            </Tilt>
           ))}
         </motion.div>
       </div>

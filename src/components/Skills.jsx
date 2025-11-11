@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Tilt from './Tilt'
 
 const skills = [
   {
@@ -40,8 +41,8 @@ const item = {
 export default function Skills() {
   return (
     <section id="skills" className="py-16 md:py-20 bg-white relative overflow-hidden">
-      <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-indigo-100 blur-3xl opacity-60" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-fuchsia-100 blur-3xl opacity-60" />
+      <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-rose-100 blur-3xl opacity-60" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-rose-100 blur-3xl opacity-60" />
 
       <div className="max-w-6xl mx-auto px-4 relative">
         <motion.h2
@@ -62,22 +63,23 @@ export default function Skills() {
           className="mt-6 grid sm:grid-cols-2 md:grid-cols-4 gap-4"
         >
           {skills.map((group) => (
-            <motion.div
-              key={group.title}
-              variants={card}
-              whileHover={{ y: -4, scale: 1.01 }}
-              className="rounded-xl border border-gray-200 p-5 bg-white/80 backdrop-blur-sm shadow-sm/0 hover:shadow-sm transition will-change-transform"
-            >
-              <h3 className="font-semibold text-gray-800">{group.title}</h3>
-              <motion.ul className="mt-3 space-y-1.5 text-sm text-gray-600">
-                {group.items.map((it) => (
-                  <motion.li key={it} variants={item} className="flex items-start gap-2">
-                    <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-indigo-500" />
-                    <span> {it} </span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.div>
+            <Tilt key={group.title} intensity={10} glare className="relative">
+              <motion.div
+                variants={card}
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="rounded-xl border border-rose-100 p-5 bg-white/80 backdrop-blur-sm shadow-sm/0 hover:shadow-sm transition will-change-transform"
+              >
+                <h3 className="font-semibold text-gray-800">{group.title}</h3>
+                <motion.ul className="mt-3 space-y-1.5 text-sm text-gray-600">
+                  {group.items.map((it) => (
+                    <motion.li key={it} variants={item} className="flex items-start gap-2">
+                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-rose-500" />
+                      <span> {it} </span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </motion.div>
+            </Tilt>
           ))}
         </motion.div>
       </div>
